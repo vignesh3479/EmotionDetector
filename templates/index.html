@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detector</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 90%;
+            height: 120px;
+            padding: 12px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            background: #333;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #555;
+        }
+
+        #result {
+            margin-top: 25px;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            text-align: left;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Emotion Detector</h1>
+
+    <p>Enter a sentence to detect its dominant emotion.</p>
+
+    <textarea id="textToAnalyze"
+              placeholder="Example: I am very happy today"></textarea>
+
+    <br>
+
+    <button onclick="detectEmotion()">
+        Detect Emotion
+    </button>
+
+    <div id="result">
+        Result will appear here.
+    </div>
+
+</div>
+
+<script>
+function detectEmotion() {
+
+    const text = document.getElementById("textToAnalyze").value;
+
+    fetch("/emotionDetector?textToAnalyze=" + encodeURIComponent(text))
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("result").innerText = data;
+        })
+        .catch(error => {
+            document.getElementById("result").innerText =
+                "An error occurred while detecting the emotion.";
+        });
+}
+</script>
+
+</body>
+</html>
